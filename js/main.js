@@ -399,7 +399,7 @@ function initTypedText() {
     const typedTextEl = document.querySelector('.typed-text') || document.querySelector('#typedText');
     if (!typedTextEl) return;
 
-    const words = ['Psicóloga Clínica', 'Especialista em TCC', 'Especialista em ABA', 'Atendimento Online & Presencial'];
+    const words = ['Abordagem TCC', 'Abordagem ABA', 'Terapia Infantil & Adulto', 'Atendimento Online & Presencial'];
     const typeSpeed = 100;
     const deleteSpeed = 50;
     const pauseTime = 2000;
