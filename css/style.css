@@ -1539,39 +1539,45 @@ img {
 }
 
 /* ==========================================================================
-   Reveal Classes (Intersection Observer)
+   Reveal Classes (Intersection Observer & GPU Acceleration)
    ========================================================================== */
-.reveal {
+.reveal,
+.reveal-left,
+.reveal-right {
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.reveal {
+  transform: translate3d(0, 25px, 0);
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .reveal.active {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .reveal-left {
-  opacity: 0;
-  transform: translateX(-50px);
-  transition: all 0.8s ease;
+  transform: translate3d(-30px, 0, 0);
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .reveal-left.active {
   opacity: 1;
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .reveal-right {
-  opacity: 0;
-  transform: translateX(50px);
-  transition: all 0.8s ease;
+  transform: translate3d(30px, 0, 0);
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .reveal-right.active {
   opacity: 1;
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 }
 
 /* ==========================================================================
@@ -1732,6 +1738,19 @@ img {
   .section {
     overflow-x: hidden;
     width: 100%;
+  }
+
+  /* Desativa deslocamentos horizontais no celular para evitar barras de rolagem e travamentos no GPU */
+  .reveal-left,
+  .reveal-right {
+    transform: translate3d(0, 20px, 0) !important;
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out !important;
+  }
+
+  .reveal-left.active,
+  .reveal-right.active {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
   }
 
   .nav-menu {
