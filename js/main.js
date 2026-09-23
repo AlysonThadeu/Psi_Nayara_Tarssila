@@ -106,12 +106,25 @@ function initScrollReveal() {
     const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     if (revealElements.length === 0) return;
 
-    // No celular, antecipa a animação em 200px ANTES da seção entrar na tela.
-    // Isso garante que os elementos já chegam prontos e a rolagem fica 100% fluida e sem travamentos.
     const isMobile = window.innerWidth <= 768;
+
+    // No celular, ativa todos os elementos imediatamente no carregamento da página.
+    // Isso evita qualquer recálculo de layout ou mutação de DOM durante o scroll, 
+    // eliminando 100% dos engasgos e travamentos nos cards e na seção Sobre Mim.
+    if (isMobile) {
+        revealElements.forEach(el => {
+            el.classList.add('active');
+            const staggers = el.querySelectorAll('.stagger-item');
+            staggers.forEach(stagger => {
+                stagger.style.transitionDelay = '0ms';
+            });
+        });
+        return;
+    }
+
     const observerOptions = {
         root: null,
-        rootMargin: isMobile ? '0px 0px 200px 0px' : '0px 0px 80px 0px',
+        rootMargin: '0px 0px 80px 0px',
         threshold: 0.01
     };
 
@@ -123,7 +136,7 @@ function initScrollReveal() {
                 
                 const staggers = el.querySelectorAll('.stagger-item');
                 staggers.forEach((stagger, index) => {
-                    stagger.style.transitionDelay = isMobile ? `${index * 30}ms` : `${index * 80}ms`;
+                    stagger.style.transitionDelay = `${index * 80}ms`;
                 });
 
                 observer.unobserve(el);
@@ -356,18 +369,13 @@ function initActiveNavHighlight() {
  */
 function initParallax() {
     const parallaxEl = document.querySelector('.hero-bg-shapes');
-    if (!parallaxEl) return;
+    if (!parallaxEl || window.innerWidth <= 768) return;
 
-    const mediaQuery = window.matchMedia('(max-width: 768px)');
     let ticking = false;
 
     const updateParallax = () => {
-        if (!mediaQuery.matches) {
-            const scrolled = window.scrollY;
-            parallaxEl.style.transform = `translateY(${scrolled * 0.3}px)`;
-        } else {
-            parallaxEl.style.transform = `none`;
-        }
+        const scrolled = window.scrollY;
+        parallaxEl.style.transform = `translateY(${scrolled * 0.3}px)`;
         ticking = false;
     };
 
