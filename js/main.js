@@ -106,10 +106,13 @@ function initScrollReveal() {
     const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     if (revealElements.length === 0) return;
 
+    // No celular, antecipa a animação em 200px ANTES da seção entrar na tela.
+    // Isso garante que os elementos já chegam prontos e a rolagem fica 100% fluida e sem travamentos.
+    const isMobile = window.innerWidth <= 768;
     const observerOptions = {
         root: null,
-        rootMargin: '0px',
-        threshold: 0.15
+        rootMargin: isMobile ? '0px 0px 200px 0px' : '0px 0px 80px 0px',
+        threshold: 0.01
     };
 
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -120,7 +123,7 @@ function initScrollReveal() {
                 
                 const staggers = el.querySelectorAll('.stagger-item');
                 staggers.forEach((stagger, index) => {
-                    stagger.style.transitionDelay = `${index * 100}ms`;
+                    stagger.style.transitionDelay = isMobile ? `${index * 30}ms` : `${index * 80}ms`;
                 });
 
                 observer.unobserve(el);
