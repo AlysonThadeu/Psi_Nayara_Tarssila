@@ -233,9 +233,11 @@ img {
 .logo-img-light {
   filter: brightness(0) invert(1);
   height: 220px;
-  max-width: 550px;
+  max-width: 100%;
   width: auto;
   object-fit: contain;
+  object-position: left center; /* Alinha o gráfico da logo 100% rente à esquerda */
+  display: block;
 }
 
 .header.scrolled .logo-img {
@@ -1250,12 +1252,24 @@ img {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 4rem;
+  align-items: start;
   margin-bottom: 3rem;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .footer-logo {
   display: inline-block;
   margin-bottom: 1rem;
+}
+
+.footer-links-col,
+.footer-social-col {
+  padding-top: 1.5rem; /* Alinha o topo dos títulos com a proporção da logo */
 }
 
 .footer-bio {
@@ -1268,8 +1282,21 @@ img {
 .footer-col-title {
   color: var(--color-white);
   font-family: var(--font-headline);
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.15rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.footer-col-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background-color: var(--color-sage);
+  border-radius: 2px;
 }
 
 .footer-links li {
@@ -1328,6 +1355,17 @@ img {
 .footer-credit strong {
   color: var(--color-white);
   font-weight: 600;
+}
+
+.footer-email-link {
+  color: var(--color-sand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
+}
+
+.footer-email-link:hover {
+  color: var(--color-sage);
 }
 
 .footer-disclaimer {
@@ -1642,6 +1680,7 @@ img {
     max-height: 190px !important;
     max-width: 92vw !important;
     width: auto;
+    object-position: center !important;
     margin: 0 auto;
   }
 
@@ -1750,7 +1789,21 @@ img {
   .footer-grid {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 2rem;
+    gap: 2.5rem;
+  }
+
+  .footer-brand {
+    align-items: center;
+  }
+
+  .footer-links-col,
+  .footer-social-col {
+    padding-top: 0;
+  }
+
+  .footer-col-title::after {
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .footer-logo {
