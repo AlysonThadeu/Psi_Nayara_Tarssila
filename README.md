@@ -1,4 +1,4 @@
-# 🧠 Naiara Tassila — Psicóloga Clínica
+# 🧠 Nayara Tarssila — Psicóloga Clínica
 
 > Landing page profissional para a Psicóloga Naiara Tassila, especialista em TCC e ABA.
 
