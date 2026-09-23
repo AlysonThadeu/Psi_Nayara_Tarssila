@@ -107,25 +107,10 @@ function initScrollReveal() {
     if (revealElements.length === 0) return;
 
     const isMobile = window.innerWidth <= 768;
-
-    // No celular, ativa todos os elementos imediatamente no carregamento da página.
-    // Isso evita qualquer recálculo de layout ou mutação de DOM durante o scroll, 
-    // eliminando 100% dos engasgos e travamentos nos cards e na seção Sobre Mim.
-    if (isMobile) {
-        revealElements.forEach(el => {
-            el.classList.add('active');
-            const staggers = el.querySelectorAll('.stagger-item');
-            staggers.forEach(stagger => {
-                stagger.style.transitionDelay = '0ms';
-            });
-        });
-        return;
-    }
-
     const observerOptions = {
         root: null,
-        rootMargin: '0px 0px 80px 0px',
-        threshold: 0.01
+        rootMargin: isMobile ? '0px 0px -20px 0px' : '0px 0px 80px 0px',
+        threshold: 0.1
     };
 
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -136,7 +121,7 @@ function initScrollReveal() {
                 
                 const staggers = el.querySelectorAll('.stagger-item');
                 staggers.forEach((stagger, index) => {
-                    stagger.style.transitionDelay = `${index * 80}ms`;
+                    stagger.style.transitionDelay = isMobile ? `${index * 70}ms` : `${index * 100}ms`;
                 });
 
                 observer.unobserve(el);
